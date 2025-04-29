@@ -16,16 +16,15 @@ components:
           targetPort: 3000
           exposure: public
 
-  - name: nginx
-    container:
-      image: nginx:latest
-      mountSources: true
-      command: [ "nginx" ]
-      args: [ "-g", "daemon off;" ]
-      endpoints:
-        - name: nginx-port
-          targetPort: 80
-          exposure: public
+- name: nginx
+  container:
+    image: nginx:latest
+    mountSources: true
+    endpoints:
+      - name: nginx-port
+        targetPort: 80
+        exposure: public
+
 
   - name: postgres
     container:
