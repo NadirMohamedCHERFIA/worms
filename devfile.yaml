@@ -28,7 +28,7 @@ components:
       image: postgres:13
       mountSources: true
       endpoints:
-        - name: postgresql-endpoint
+        - name: postgresql-edp
           targetPort: 5432
           exposure: public
       env:
