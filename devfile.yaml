@@ -62,6 +62,6 @@ commands:
 
 projects:
   - name: node-app
-    source:
-      type: git
-      location: https://github.com/your-org/your-repo.git
+    git:
+      remotes:
+        origin: https://github.com/NadirMohamedCHERFIA/worms.git
