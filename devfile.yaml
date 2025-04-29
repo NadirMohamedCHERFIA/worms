@@ -16,14 +16,14 @@ components:
           targetPort: 3000
           exposure: public
 
-- name: nginx
-  container:
-    image: nginx:latest
-    mountSources: true
-    endpoints:
-      - name: nginx-port
-        targetPort: 8080
-        exposure: public
+  - name: nginx
+    container:
+      image: nginx:latest
+      mountSources: true
+      endpoints:
+        - name: nginx-port
+          targetPort: 8080
+          exposure: public
 
   - name: postgres
     container:
