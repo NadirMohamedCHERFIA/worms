@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: nodejs-nginx-postgres-app
+  name: worms
   version: 1.0.0
   displayName: Node.js NGINX PostgreSQL App
 
