@@ -1,6 +1,6 @@
-apiVersion: 1.0.0
+schemaVersion: 2.2.2
 metadata:
-  name: my-nodejs-nginx-postgresql-app
+  name: worms-front
   version: 1.0.0
   displayName: Node.js NGINX PostgreSQL Application
   description: A development workspace with Node.js, NGINX, and PostgreSQL
