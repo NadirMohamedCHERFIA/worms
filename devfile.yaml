@@ -1,0 +1,65 @@
+apiVersion: 1.0.0
+metadata:
+  name: my-nodejs-nginx-postgresql-app
+  version: 1.0.0
+  displayName: Node.js NGINX PostgreSQL Application
+  description: A development workspace with Node.js, NGINX, and PostgreSQL
+
+components:
+  - name: nodejs-container
+    container:
+      image: node:20
+      mountSources: true
+      endpoints:
+        - name: nodejs-endpoint
+          targetPort: 3000
+          exposure: public
+  - name: nginx-container
+    container:
+      image: nginx:latest
+      mountSources: true
+      endpoints:
+        - name: nginx-endpoint
+          targetPort: 80
+          exposure: public
+      command: ["nginx", "-g", "daemon off;"]
+  - name: postgresql-container
+    container:
+      image: postgres:13
+      mountSources: true
+      endpoints:
+        - name: postgresql-endpoint
+          targetPort: 5432
+          exposure: public
+      env:
+        - name: POSTGRES_USER
+          value: myuser
+        - name: POSTGRES_PASSWORD
+          value: mypassword
+        - name: POSTGRES_DB
+          value: mydb
+
+commands:
+  - name: install-deps
+    apply:
+      component: nodejs-container
+      command: npm install
+  - name: run-app
+    apply:
+      component: nodejs-container
+      command: npm start
+
+projects:
+  - name: node-app
+    source:
+      type: git
+      url: https://git.cloud.safran/safrangrp/jetlab/projects/sae/worms-front.git
+      branch: main
+
+devfiles:
+  - component: nodejs-container
+    name: install-deps
+    mountSources: true
+  - component: nodejs-container
+    name: run-app
+    mountSources: true
