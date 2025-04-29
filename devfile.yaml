@@ -22,15 +22,6 @@ components:
           targetPort: 3000
           exposure: public
 
-  - name: nginx
-    container:
-      image: nginx:latest
-      mountSources: false  # prevent crash
-      endpoints:
-        - name: nginx-port
-          targetPort: 8080
-          exposure: public
-
   - name: postgres
     container:
       image: postgres:13
