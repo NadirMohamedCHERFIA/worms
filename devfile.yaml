@@ -1,36 +1,36 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.2.0
 metadata:
-  name: worms-front
+  name: nodejs-nginx-postgres-app
   version: 1.0.0
-  displayName: Node.js NGINX PostgreSQL Application
-  description: A development workspace with Node.js, NGINX, and PostgreSQL
+  displayName: Node.js NGINX PostgreSQL App
 
 components:
-  - name: nodejs-container
+  - name: nodejs
     container:
       image: node:20
       mountSources: true
+      command: [ "sleep" ]
+      args: [ "infinity" ]
       endpoints:
-        - name: nodejs-endpoint
+        - name: nodejs-port
           targetPort: 3000
           exposure: public
-  - name: nginx-container
+
+  - name: nginx
     container:
       image: nginx:latest
       mountSources: true
+      command: [ "nginx" ]
+      args: [ "-g", "daemon off;" ]
       endpoints:
-        - name: nginx-endpoint
+        - name: nginx-port
           targetPort: 80
           exposure: public
-      command: ["nginx", "-g", "daemon off;"]
-  - name: postgresql-container
+
+  - name: postgres
     container:
       image: postgres:13
-      mountSources: true
-      endpoints:
-        - name: postgresql-edp
-          targetPort: 5432
-          exposure: public
+      mountSources: false
       env:
         - name: POSTGRES_USER
           value: myuser
@@ -38,28 +38,32 @@ components:
           value: mypassword
         - name: POSTGRES_DB
           value: mydb
+      endpoints:
+        - name: pgsql-port
+          targetPort: 5432
+          exposure: internal
 
 commands:
-  - name: install-deps
-    apply:
-      component: nodejs-container
-      command: npm install
-  - name: run-app
-    apply:
-      component: nodejs-container
-      command: npm start
+  - id: install-dependencies
+    exec:
+      component: nodejs
+      commandLine: "npm install"
+      workingDir: /projects/node-app
+      group:
+        kind: build
+        isDefault: true
+
+  - id: run-application
+    exec:
+      component: nodejs
+      commandLine: "npm start"
+      workingDir: /projects/node-app
+      group:
+        kind: run
+        isDefault: true
 
 projects:
   - name: node-app
     source:
       type: git
-      url: https://git.cloud.safran/safrangrp/jetlab/projects/sae/worms-front.git
-      branch: main
-
-devfiles:
-  - component: nodejs-container
-    name: install-deps
-    mountSources: true
-  - component: nodejs-container
-    name: run-app
-    mountSources: true
+      location: https://github.com/your-org/your-repo.git
