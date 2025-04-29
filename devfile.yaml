@@ -22,9 +22,8 @@ components:
     mountSources: true
     endpoints:
       - name: nginx-port
-        targetPort: 80
+        targetPort: 8080
         exposure: public
-
 
   - name: postgres
     container:
