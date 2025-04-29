@@ -14,28 +14,11 @@ components:
   - name: nodejs
     container:
       image: node:20
-      mountSources: true
-      command: [ "sleep" ]
-      args: [ "infinity" ]
-      endpoints:
-        - name: nodejs-port
-          targetPort: 3000
-          exposure: public
 
   - name: postgres
     container:
       image: postgres:13
-      env:
-        - name: POSTGRES_USER
-          value: myuser
-        - name: POSTGRES_PASSWORD
-          value: mypassword
-        - name: POSTGRES_DB
-          value: mydb
-      endpoints:
-        - name: pgsql-port
-          targetPort: 5432
-          exposure: internal
+
 
 # You can re-enable these when your app has a package.json
 # commands:
