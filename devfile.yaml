@@ -25,7 +25,6 @@ components:
   - name: postgres
     container:
       image: postgres:13
-      mountSources: false
       env:
         - name: POSTGRES_USER
           value: myuser
