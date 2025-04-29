@@ -19,7 +19,7 @@ components:
   - name: nginx
     container:
       image: nginx:latest
-      mountSources: true
+      mountSources: false
       endpoints:
         - name: nginx-port
           targetPort: 8080
