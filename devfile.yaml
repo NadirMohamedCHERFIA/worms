@@ -4,6 +4,12 @@ metadata:
   version: 1.0.0
   displayName: Node.js NGINX PostgreSQL App
 
+projects:
+  - name: node-app
+    git:
+      remotes:
+        origin: https://github.com/NadirMohamedCHERFIA/worms.git
+
 components:
   - name: nodejs
     container:
@@ -19,7 +25,7 @@ components:
   - name: nginx
     container:
       image: nginx:latest
-      mountSources: false
+      mountSources: false  # prevent crash
       endpoints:
         - name: nginx-port
           targetPort: 8080
@@ -41,27 +47,22 @@ components:
           targetPort: 5432
           exposure: internal
 
-commands:
-  - id: install-dependencies
-    exec:
-      component: nodejs
-      commandLine: "npm install"
-      workingDir: /projects/node-app
-      group:
-        kind: build
-        isDefault: true
+# You can re-enable these when your app has a package.json
+# commands:
+#   - id: install-dependencies
+#     exec:
+#       component: nodejs
+#       commandLine: "npm install"
+#       workingDir: /projects/node-app
+#       group:
+#         kind: build
+#         isDefault: true
 
-  - id: run-application
-    exec:
-      component: nodejs
-      commandLine: "npm start"
-      workingDir: /projects/node-app
-      group:
-        kind: run
-        isDefault: true
-
-projects:
-  - name: node-app
-    git:
-      remotes:
-        origin: https://github.com/NadirMohamedCHERFIA/worms.git
+#   - id: run-application
+#     exec:
+#       component: nodejs
+#       commandLine: "npm start"
+#       workingDir: /projects/node-app
+#       group:
+#         kind: run
+#         isDefault: true
